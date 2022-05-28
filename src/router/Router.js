@@ -11,12 +11,13 @@ import AddNewAddress from '../view/addressBook/AddNewAddress';
 import AddressBookList from '../view/addressBook/AddressBookList';
 import Sign from '../view/Sign';
 import SignUp from '../view/SignUp';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Router = () => {
     let navigate = useNavigate();
 
     const auth = useSelector(state => state.LoginReducer);
-    console.log('auth:', auth);
     const token = window.localStorage.getItem('security_token');
     useEffect(() => {
         if (token || auth?.authenticate) {
@@ -26,9 +27,8 @@ const Router = () => {
         }
     }, [])
     return (
-        // <div>Router</div>
         <>
-            {/* <Continer /> */}
+            <ToastContainer autoClose={1200} />
             <NavBar />
             <Routes>
                 <Route path="/" element={<Sign />} />

@@ -12,24 +12,64 @@ mutation {
   }  
 `;
 
-const READ_TODOS = gql`
-  query todos{
-    todos {
+export const LOGOUTCUSTOMER = gql`
+mutation {
+  revokeCustomerToken {
+    result
+  }
+}
+
+`;
+
+export const READ_ADDRESSBOOK = gql`
+query{
+  customer {
+    firstname
+    lastname
+    email
+    addresses {
       id
-      text
-      completed
+      city
+  country_code
+      region {
+        region
+        region_code
+      }
+      street
+      postcode
+      telephone
     }
   }
+}
 `;
 
-const CREATE_TODO = gql`
-  mutation CreateTodo($text: String!) {
-    createTodo(text: $text)
+export const createNewaddress = gql`
+mutation {
+  createCustomerAddress(input: {
+    region: {
+      region_id: 7
+    }
+    country_code: US
+    street: ["123 Main Street"]
+    telephone: "7777777777"
+    postcode: "77777"
+    city: "Phoenix"
+    firstname: "Bob"
+    lastname: "Loblaw"
+    default_shipping: true
+    default_billing: false
+  }) {
+    id
+    region {
+      region
+      region_code
+    }
+    country_code
+    street
+    telephone
+    postcode
+    city
+    default_shipping
+    default_billing
   }
-`;
-
-const REMOVE_TODO = gql`
-  mutation RemoveTodo($id: String!) {
-    removeTodo(id: $id)
-  }
-`;
+}`

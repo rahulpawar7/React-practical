@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row, Card } from 'react-bootstrap'
 import './styles.css'
 const CommonCard = (props) => {
+    // console.log('getValue-----',props.getValue);
     return (
         <div className="col-md-4 col-8">
             <Card>

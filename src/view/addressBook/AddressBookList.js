@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import CommonCard from '../../components/Card';
+// import { READ_ADDRESSBOOK } from '../../utils/QueryAndMutations';
 import './styles.css'
+import { READ_ADDRESSBOOK } from '../../utils/QueryAndMutations';
 const Sdata = [
     {
         // imgsrc: web,
@@ -40,6 +44,32 @@ const Sdata = [
 ];
 
 const AddressBookList = () => {
+    const token = window.localStorage.getItem('security_token');
+    const [searchData, setSearchData] = useState(Sdata)
+    // const { loading, error, data } = useQuery(READ_ADDRESSBOOK,{
+    //     context: {
+    //         headers: {
+    //           "Authorization":`Bearer ${token}`,
+    //         }
+    //       }
+    // });
+
+    // if (loading) return <p>loading...</p>;
+    // if (error) return <p>ERROR</p>;
+    // if (!data) return <p>Not found</p>;
+    // if (data) {
+    //     console.log(data);
+    // }
+
+    const handleSearch = (e) => {
+        let searchValue = e.target.value
+        if (searchValue) {
+            setSearchData(Sdata.filter((item, index) => (JSON.stringify(item)).toLowerCase().includes(searchValue)))
+        } else {
+            setSearchData(Sdata)
+        }
+    }
+
     return (
         <>
             <div className='w-25 mx-auto mt-3 main-div-text'>
@@ -48,7 +78,7 @@ const AddressBookList = () => {
             <div className='address-book-div'>
                 <div>
                     <div className='w-100 mt-2 Address-form-div addressSearch'>
-                        <i className="fa fa-search fa-search search-icon"></i><Form.Control type="text" className='addressSearch' placeholder="Search address here..." />
+                        <i className="fa fa-search fa-search search-icon"></i><Form.Control type="text" onChange={(e)=>handleSearch(e)} className='addressSearch' placeholder="Search address here..." />
                     </div>
                 </div>
             </div>
@@ -59,9 +89,9 @@ const AddressBookList = () => {
                             <div className="col-8 mx-auto">
                                 <div className="row gy-4">
                                     {
-                                        Sdata.map((val, ind) => {
+                                        searchData.map((val, ind) => {
                                             return <CommonCard key={ind}
-                                                imgsrc={val.imgsrc}
+                                                // getValue={val}
                                                 title={val.title}
                                             />
                                         })

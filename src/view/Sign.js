@@ -12,6 +12,8 @@ const Sign = (props) => {
     const [inputs, setInputs] = useState({})
     const [loginSubmit] = useMutation(LOGINCUSTOMER);
     let navigate = useNavigate();
+    const [inputsError, setInputsError] = useState({});
+    const [checkError, setcheckError] = useState(true)
 
     const auth = useSelector(state => state.LoginReducer);
     const token = window.localStorage.getItem('security_token');
@@ -23,9 +25,33 @@ const Sign = (props) => {
         }
     }, [])
 
+    const handleValidation = () => {
+        let errors = {};
+        let formIsValid = true;
+        //Email
+        if (!inputs?.EMAIL) {
+            formIsValid = false;
+            errors["EMAIL"] = "Cannot be empty";
+        }
+        
+        if (!inputs?.PASSWORD) {
+            formIsValid = false;
+            errors["PASSWORD"] = "Cannot be empty";
+        }
+
+        setInputsError(errors);
+        // console.log('formIsValid:', formIsValid);
+        setcheckError(formIsValid)
+        return formIsValid;
+    }
     const onSubmit = () => {
         console.log('inputs----------', inputs);
-        dispatch(getUserLogin(inputs, loginSubmit, navigate))
+        const isValid = handleValidation();
+        if (isValid) {
+            dispatch(getUserLogin(inputs, loginSubmit, navigate))
+        }else{
+            alert('Enter your emial and password')
+        }
     }
     return (
         <>

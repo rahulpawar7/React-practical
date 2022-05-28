@@ -1,4 +1,4 @@
-import { loginConst } from "../action-Type/Constants";
+import { loginConst, logoutConst } from "../action-Type/Constants";
 
 const initialState = {
   token: null,
@@ -24,21 +24,21 @@ const reducer = (state = initialState, action) => {
         token: action?.payload?.token,
         authenticate: true,
       }
-    case loginConst.LOGIN_FAILED:
-      return {
-        ...state,
-        error: action?.payload,
-        authenticate: false,
-      }
-    // case Logout.LOGOUT_USER_REQUEST:
+    // case loginConst.LOGIN_FAILED:
     //   return {
     //     ...state,
-    //     loading: true
+    //     error: action?.payload,
+    //     authenticate: false,
     //   }
-    // case Logout.LOGOUT_USER_SUCCESS:
-    //   return {
-    //     ...initialState,
-    //   }
+    case logoutConst.LOGOUT_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case logoutConst.LOGOUT_SUCCESS:
+      return {
+        ...initialState,
+      }
     // case Logout.LOGOUT_USER_FAILURE:
     //   return {
     //     ...state,
