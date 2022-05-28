@@ -1,0 +1,23 @@
+.footer-main {
+    /* position: absolute; */
+    bottom  : 0;
+    width   : 100%;
+    height  : 50px;
+    /* border  : 1px solid red; */
+}
+
+.common-footer-col {
+    margin    : 10px auto;
+    text-align: center;
+    display   : block
+}
+
+.footer-icons {
+    display           : flex;
+    justify-content   : space-between;
+    max-width         : 100px;
+    margin            : 0 auto;
+    /* background     : #A0C5E8; */
+    padding           : 10px 0;
+    margin            : 3px auto;
+}

@@ -1,0 +1,39 @@
+.address-book-div {
+    margin    : auto;
+    background: #f2f2f2;
+    width     : 30%;
+}
+
+.addressSearch>input {
+    background-color: #f2f2f2 !important;
+    border          : 0px #f2f2f2 !important;
+    display         : flex;
+}
+
+.Address-form-div {
+    display: flex;
+    margin : auto;
+    width  : 80%;
+    padding: 3px;
+}
+
+.search-icon {
+    font-size      : 18px;
+    justify-content: flex-start;
+    margin-top     : 11px;
+    margin-left    : 10px;
+}
+
+.add-new-address-btn {
+    width        : 180px;
+    background   : black !important;
+    border-color : black !important;
+    height       : 50px;
+    border-radius: 0px !important;
+
+    margin       : -20px -50px;
+    position     : relative;
+    top          : 50%;
+    left         : 50%;
+    padding: 10px !important;
+}

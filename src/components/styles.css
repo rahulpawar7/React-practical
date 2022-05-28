@@ -1,0 +1,13 @@
+.text-display1 {
+    text-align: start !important;
+}
+
+.text-display2 {
+    text-align: end !important;
+}
+
+.card {
+    background-color: #f2f2f2 !important;
+    border          :none !important;
+    border-radius   : none !important;
+}
