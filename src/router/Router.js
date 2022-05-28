@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import {
-    BrowserRouter,
     Routes,
     Route,
+    useNavigate,
 } from "react-router-dom";
 import Footer from '../components/Layout/Footer';
 import NavBar from '../components/Layout/NavBar';
@@ -12,6 +13,18 @@ import Sign from '../view/Sign';
 import SignUp from '../view/SignUp';
 
 const Router = () => {
+    let navigate = useNavigate();
+
+    const auth = useSelector(state => state.LoginReducer);
+    console.log('auth:', auth);
+    const token = window.localStorage.getItem('security_token');
+    useEffect(() => {
+        if (token || auth?.authenticate) {
+            navigate("AddressBookList");
+        } else {
+            navigate("/");
+        }
+    }, [])
     return (
         // <div>Router</div>
         <>

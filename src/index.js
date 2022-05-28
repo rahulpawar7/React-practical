@@ -6,11 +6,24 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { Provider } from 'react-redux';
+import store from './redux/store/Store';
+
+const client = new ApolloClient({
+  uri: "https://rjstest.seepossible.link/graphql "
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

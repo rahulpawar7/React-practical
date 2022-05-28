@@ -1,7 +1,14 @@
 import React from 'react'
-import { Navbar, Container, Nav, NavDropdown, FormControl, Form, Button } from 'react-bootstrap'
+import { Navbar, Container, Nav } from 'react-bootstrap'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 const NavBar = () => {
+    // let navigate = useNavigate();
+
+    const auth = useSelector(state => state.LoginReducer);
+    console.log('auth:', auth);
+    const token = window.localStorage.getItem('security_token');
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -10,7 +17,22 @@ const NavBar = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto"></Nav>
                     <Nav>
-                        <Nav.Link><Link to="/">Sign In </Link></Nav.Link>
+                        {
+                            token || auth?.authenticate ? <>
+                                <Nav.Link eventKey={2}>
+                                    <Link to="/AddressBookList">Welcome</Link>
+                                </Nav.Link>
+                                <Nav.Link eventKey={2}>
+                                    <Link to="/SignUp">Log Out</Link>
+                                </Nav.Link>
+                            </> : <>
+                                <Nav.Link><Link to="/">Sign In </Link></Nav.Link>
+                                <Nav.Link eventKey={2}>
+                                    <Link to="#">Sign Up</Link>
+                                </Nav.Link>
+                            </>
+                        }
+                        {/* <Nav.Link><Link to="/">Sign In </Link></Nav.Link>
                         <Nav.Link eventKey={2}>
                             <Link to="#">Sign Up</Link>
                         </Nav.Link>
@@ -19,7 +41,7 @@ const NavBar = () => {
                         </Nav.Link>
                         <Nav.Link eventKey={2}>
                             <Link to="/SignUp">Log Out</Link>
-                        </Nav.Link>
+                        </Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
