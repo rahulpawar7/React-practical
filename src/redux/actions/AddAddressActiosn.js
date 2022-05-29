@@ -59,7 +59,7 @@ export const updateAddress = (payload, updateSubmit, navigate) => async dispatch
     try {
         let getId =payload?.id
         console.log('getId:',payload);
-        updateSubmit({ variables: { id: {getId}, input: { firstname: payload.fname, lastname: payload.lname, city: payload.city, telephone: payload.telephone, country_code: payload.country, street: payload.address } } }).then(response => {
+        updateSubmit({ variables: { id: getId, input: { firstname: payload.fname, lastname: payload.lname, city: payload.city, telephone: payload.telephone, country_code: payload.country, street: payload.address } } }).then(response => {
             //handle response
             dispatch({
                 type: addAddressConst.UPDATERESSADD_SUCCESS,
