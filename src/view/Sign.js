@@ -45,7 +45,7 @@ const Sign = (props) => {
         return formIsValid;
     }
     const onSubmit = () => {
-        console.log('inputs----------', inputs);
+        // console.log('inputs----------', inputs);
         const isValid = handleValidation();
         if (isValid) {
             dispatch(getUserLogin(inputs, loginSubmit, navigate))

@@ -21,7 +21,7 @@ mutation {
 
 `;
 
-export const READ_ADDRESSBOOK = gql`
+export const READ_ADDRESSBOOK = `
 query{
   customer {
     firstname
@@ -71,5 +71,17 @@ mutation {
     city
     default_shipping
     default_billing
+  }
+}`
+
+export const UPDATEADDRESS = gql`
+mutation {
+  updateCustomerAddress(id:52, input: {
+    city: "New City"
+    postcode: "55555"
+  }) {
+    id
+    city
+    postcode
   }
 }`

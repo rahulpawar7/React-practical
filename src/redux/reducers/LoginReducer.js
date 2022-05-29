@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  console.log('Redux action login user ----', action?.payload)
+  // console.log('Redux action login user ----', action?.payload)
   switch (action.type) {
     case loginConst.LOGIN_REQUEST:
       return {

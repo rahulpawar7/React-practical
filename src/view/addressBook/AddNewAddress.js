@@ -2,28 +2,50 @@ import { useMutation } from '@apollo/react-hooks'
 import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { addNewAddress } from '../../redux/actions/AddAddressActiosn'
-import { createNewaddress } from '../../utils/QueryAndMutations'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { addNewAddress, updateAddress } from '../../redux/actions/AddAddressActiosn'
+import { createNewaddress, UPDATEADDRESS } from '../../utils/QueryAndMutations'
 
-const AddNewAddress = () => {
-    // createNewaddress
+const AddNewAddress = (props) => {
     const dispatch = useDispatch()
-    const [inputs, setInputs] = useState({})
+    const { state } = useLocation();
+    const [inputs, setInputs] = useState({
+        id: state?.editData?.id || '',
+        fname: state?.editData?.fname || '',
+        lname: state?.editData?.lname || '',
+        address: state?.editData?.street[0] || '',
+        address2: state?.editData?.street[1] || '',
+        city: state?.editData?.city || '',
+        state: state?.editData?.state || '',
+        country: state?.editData?.country_code || '',
+        telephone: state?.editData?.telephone || ''
+    })
     const token = window.localStorage.getItem('security_token');
+    console.log('state----', state);
 
-    const [loginSubmit] = useMutation(createNewaddress,{
+    const [loginSubmit] = useMutation(createNewaddress, {
         context: {
             headers: {
-              "Authorization":`Bearer ${token}`,
+                "Authorization": `Bearer ${token}`,
             }
-          }
+        }
+    });
+    const [updateSubmit] = useMutation(UPDATEADDRESS, {
+        context: {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
     });
     let navigate = useNavigate();
 
-    const onHandelSubmit=()=>{
-        console.log('inputs---------',inputs);
-        dispatch(addNewAddress(inputs,loginSubmit,navigate))
+    const onHandelSubmit = () => {
+        if (state?.isEditable === true) {
+            alert('callled')
+            dispatch(updateAddress(inputs, updateSubmit, navigate))
+        } else {
+            dispatch(addNewAddress(inputs, loginSubmit, navigate))
+        }
     }
 
     return (
@@ -60,7 +82,10 @@ const AddNewAddress = () => {
                                 value={inputs.address}
                                 onChange={(event) => { setInputs({ ...inputs, ['address']: event.target.value }) }}
                                 placeholder="" />
-                            <Form.Control type="text" name='address1' className='mt-2' placeholder="" />
+                            <Form.Control type="text" name='address1'
+                                value={inputs.address2}
+                                onChange={(event) => { setInputs({ ...inputs, ['address2']: event.target.value }) }}
+                                className='mt-2' placeholder="" />
                         </Form.Group>
                         <Row>
                             <Col>
@@ -96,8 +121,8 @@ const AddNewAddress = () => {
                                 onChange={(event) => { setInputs({ ...inputs, ['telephone']: event.target.value }) }}
                                 placeholder="" />
                         </Form.Group>
-                        <Button variant="primary" onClick={()=>onHandelSubmit()} className='login-btn-div'>
-                            Save Address
+                        <Button variant="primary" onClick={() => onHandelSubmit()} className='login-btn-div'>
+                            {state?.isEditable === true ? `Update Address` : `Save Address`}
                         </Button>
                     </Form>
                 </div>
